@@ -10,5 +10,6 @@ angular.module('ToDoApp').config(function($locationProvider, $routeProvider) {
 	.when('/accounts/register', {
 		templateUrl: 'templates/register.html',
 		controller: 'RegisterController'
-	});
+	})
+	;
 });
