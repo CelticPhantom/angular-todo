@@ -6,17 +6,12 @@ angular.module('RouteControllers', [])
 		$scope.registrationUser = {};
 		var URL = "https://morning-castle-91468.herokuapp.com/";
 
-		var authStorage = {
-			name : "StorageTest"
-		};
-
-		store.set('obj', authStorage);	// Key & Value
-
 		$scope.login = function() {
 			UserAPIService.callAPI(URL + "accounts/api-token-auth/", $scope.data)
 			.then(function(results) {
 				$scope.token = results.data.token;
-				console.log("Token ::  " + $scope.token);
+				store.set('username', $scope.registrationUser.username);
+				store.set('authToken', $scope.token);
 			})
 			.catch(function(err) {
 				console.log(err.data);
