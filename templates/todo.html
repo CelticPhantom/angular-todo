@@ -1,0 +1,75 @@
+<div class="container">
+  <table class="table">
+    <thead>
+      <tr>
+        <td>Title</td>
+        <td>Description</td>
+        <td>Status</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="todo in todos">
+        <td>{{todo.title}}</td>
+        <td>{{todo.description}}</td>
+        <td>{{todo.status}}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <button type="button" class="btn btn-primary btn-large"
+          data-toggle="modal" data-target="#todo-modal">
+    Create new ToDo item
+  </button>
+
+  <div class="modal fade" id="todo-modal" tabindex="-1" 
+      role="dialog" aria-labelled-by="todo-form-modal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" 
+                data-dismiss="modal" aria-hidden="true">
+            &times;
+          </button>
+          <h4 class="modal-title" id="todo-form-header">
+            ToDo Item
+          </h4>
+        </div>  <!-- /modal-header -->
+        <div class="modal-body">
+            <form name="todoForm" ng-submit="submitForm()" novalidate>
+                <div class="form-group">
+                    <label>Title</label>
+                    <input type="text" name="title" class="form-control" ng-model="todo.title" required>
+                    <p ng-show="todoForm.title.$pristine" class="help-block">
+                        A title is required
+                    </p>
+                </div>  <!-- /title -->
+                <div class="form-group">
+                    <label>Description</label>
+                    <input type="text" name="description" class="form-control" ng-model="todo.description" required>
+                    <p ng-show="todoForm.description.$pristine" class="help-block">
+                        A title is required
+                    </p>
+                </div>  <!-- /description -->
+                <div class="form-group">
+                    <label>Status</label>
+                    <select class="form-control" name="status" ng-model="todo.status">
+                        <option value="ToDo">ToDo</option>
+                        <option value="Doing">Doing</option>
+                        <option value="Done">Done</option>
+                    </select>
+                </div>  <!-- /status -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        Close
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        Create
+                    </button>
+                </div>  <!-- /modal-footer -->
+            </form>          
+        </div>  <!-- /modal-body -->
+      </div>    <!-- /modal-content -->
+    </div>      <!-- /modal-dialog -->
+  </div>        <!-- /modal -->
+
+</div>          <!-- /container -->

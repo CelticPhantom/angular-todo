@@ -10,6 +10,14 @@ form.my-form {
 	margin-top: 95px;
 }
 
+.table>thead>tr>td {
+	font-weight: bold;
+}
+
+.table {
+	margin-top: 20px;
+}
+
 @media only screen and (min-width: 768px) {
 	body {
 		padding-top: 90px;
