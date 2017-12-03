@@ -42,32 +42,42 @@ angular.module('RouteControllers', [])
 				$scope.registrationUser.password);
 		};
 	})
-	.controller('TodoController', function($scope, $location, TodoAPIService, store) {
+	.controller('TodoController', function($scope, TodoAPIService, store) {
         var URL = "https://morning-castle-91468.herokuapp.com/";
- 
+        var todoURL = URL + "todo/";
+        
         $scope.authToken = store.get('authToken');
         $scope.username = store.get('username');
  
         $scope.todos = [];
  
-        TodoAPIService.getTodos(URL + "todo/", $scope.username, $scope.authToken).then(function(results) {
-            $scope.todos = results.data || [];
-            console.log($scope.todos);
-        }).catch(function(err) {
-            console.log(err);
-        });
+        TodoAPIService.getToDos(todoURL, $scope.username, $scope.authToken)
+	        .then(function(results) {
+	            $scope.todos = results.data || [];
+	            console.log("ToDo list :  ");
+	            console.log($scope.todos);
+	        }).catch(function(err) {
+	            console.log("Error :  ");
+	            console.log(err);
+	        });
  
         $scope.submitForm = function() {
             if ($scope.todoForm.$valid) {
                 $scope.todo.username = $scope.username;
-                $scope.todos.push($scope.todo);
+                $scope.todos.push(angular.copy($scope.todo));
  
-                TodoAPIService.createTodo(URL + "todo/", $scope.todo, $scope.authToken).then(function(results) {
-                    console.log(results)
-                }).catch(function(err) {
-                    console.log(err)
-                });
+                TodoAPIService.createToDo(todoURL, $scope.todo, $scope.authToken)
+	                .then(function(results) {
+	                    console.log(results);
+	                    $scope.todo.title = "";
+	                    $scope.todo.description = "";
+	                    $scope.todo.status = "";
+	                }).catch(function(err) {
+	                    console.log("Error :");
+	                	console.log(err);
+	                });
             }
         }
+        
     });
 	;

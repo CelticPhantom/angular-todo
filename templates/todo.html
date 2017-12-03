@@ -35,10 +35,11 @@
           </h4>
         </div>  <!-- /modal-header -->
         <div class="modal-body">
-            <form name="todoForm" ng-submit="submitForm()" novalidate>
+            <form name="todoForm" id="todoForm" ng-submit="submitForm()" novalidate>
                 <div class="form-group">
                     <label>Title</label>
-                    <input type="text" name="title" class="form-control" ng-model="todo.title" required>
+                    <input type="text" name="title" class="form-control" 
+                    ng-model="todo.title" required autofocus>
                     <p ng-show="todoForm.title.$pristine" class="help-block">
                         A title is required
                     </p>
@@ -47,13 +48,13 @@
                     <label>Description</label>
                     <input type="text" name="description" class="form-control" ng-model="todo.description" required>
                     <p ng-show="todoForm.description.$pristine" class="help-block">
-                        A title is required
+                        A description is required
                     </p>
                 </div>  <!-- /description -->
                 <div class="form-group">
                     <label>Status</label>
                     <select class="form-control" name="status" ng-model="todo.status">
-                        <option value="ToDo">ToDo</option>
+                        <option value="Todo">ToDo</option>
                         <option value="Doing">Doing</option>
                         <option value="Done">Done</option>
                     </select>
@@ -73,3 +74,10 @@
   </div>        <!-- /modal -->
 
 </div>          <!-- /container -->
+
+<script>
+	//Every time a modal is shown, if it has an autofocus element, focus on it.
+	$('.modal').on('shown.bs.modal', function() {
+	  $(this).find('[autofocus]').focus();
+	});
+</script>
