@@ -76,7 +76,20 @@ angular.module('RouteControllers', [])
 	                }).catch(function(err) {
 	                    console.log("Error creating a ToDo item :");
 	                	console.log(err);
-	                });
+	                })
+                ;
+                
+                TodoAPIService.getToDos(todoURL, $scope.username, $scope.authToken)
+    	        .then(function(results) {
+    	            $scope.todos = results.data || [];
+    	            console.log("ToDo list :  ");
+    	            console.log($scope.todos);
+    	        }).catch(function(err) {
+    	            console.log("Error retrieving the ToDo list :  ");
+    	            console.log(err);
+    	        })
+                ;
+
             }
         }
         
