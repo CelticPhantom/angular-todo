@@ -1,0 +1,30 @@
+<form name="todoForm" id="todoForm" data-ng-submit="submitForm()" novalidate>
+    <div class="form-group">
+        <label>Title</label>
+        <input type="text" name="title" class="form-control" 
+        data-ng-model="todo.title" required autofocus>
+        <p data-ng-show="todoForm.title.$error.required" class="help-block">
+            A title is required
+        </p>
+    </div>  <!-- /title -->
+    <div class="form-group">
+        <label>Description</label>
+        <input type="text" name="description" class="form-control" data-ng-model="todo.description" required>
+        <p data-ng-show="todoForm.description.$error.required" class="help-block">
+            A description is required
+        </p>
+    </div>  <!-- /description -->
+    <div class="form-group">
+        <label>Status</label>
+        <select class="form-control" name="status" data-ng-model="todo.status">
+            <option value="Todo">ToDo</option>
+            <option value="Doing">Doing</option>
+            <option value="Done">Done</option>
+        </select>
+    </div>  <!-- /status -->
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">
+            Save Changes
+        </button>
+    </div>  <!-- /modal-footer -->
+</form>          
