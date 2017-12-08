@@ -1,0 +1,25 @@
+<table class="table">
+    <thead>
+      <tr>
+        <td>Title</td>
+        <td>Description</td>
+        <td>Status</td>
+        <td>Actions</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr data-ng-repeat="todo in todos">
+        <td>{{todo.title}}</td>
+        <td>{{todo.description}}</td>
+        <td>{{todo.status}}</td>
+        <td>
+        	<button data-ng-click="editToDo(todo.id)">
+        		<span class="glyphicon glyphicon-edit"></span>
+        	</button>
+        	<button data-ng-click="deleteToDo(todo.id)">
+        		<span class="glyphicon glyphicon-trash"></span>
+        	</button>
+        </td>
+      </tr>
+    </tbody>
+</table>
