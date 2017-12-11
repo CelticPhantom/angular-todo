@@ -7,13 +7,16 @@ angular.module('RouteControllers', [])
 		var URL = "https://morning-castle-91468.herokuapp.com/";
 
 		$scope.login = function() {
-			UserAPIService.callAPI(URL + "accounts/api-token-auth/", $scope.data)
+			UserAPIService.saveUser(URL + "accounts/api-token-auth/", $scope.data)
 			.then(function(results) {
+				console.log("Authenticated user :  " + $scope.data.username);
+				console.log(results.data);
 				$scope.token = results.data.token;
 				store.set('username', $scope.registrationUser.username);
 				store.set('authToken', $scope.token);
 			})
 			.catch(function(err) {
+				console.log("Error authenticating user :  " +$scope.data.username);
 				console.log(err.data);
 			})
 			;
@@ -24,11 +27,14 @@ angular.module('RouteControllers', [])
 				$scope.registrationUser.username = $scope.user.username;
 				$scope.registrationUser.password = $scope.user.password;
 
-				UserAPIService.callAPI(URL + "accounts/register/", $scope.registrationUser)
+				UserAPIService.saveUser(URL + "accounts/register/", $scope.registrationUser)
 				.then(function(results) {
                     $scope.data = results.data;
-                    alert("You have successfully registered to Angular Todo");
+                    console.log("Registered user :");
+                    console.log(results.data);
+                    alert("You have successfully registered to Angular Todo as :\n  " + $scope.registrationUser.username);
                     $scope.login();
+//                    login($scope.data);
                 })
                 .catch(function(err) {
                     alert("Oops! Something went wrong!");
@@ -164,5 +170,56 @@ angular.module('RouteControllers', [])
     		}
     	};
     })
-    ;
-;
+    .controller('LoginController', function($scope, UserAPIService, store, $location) {
+		console.log("LoginController IN");
+    	$scope.loginUser = {};
+		var URL = "https://morning-castle-91468.herokuapp.com/";
+
+		$scope.submitForm = function() {
+			if($scope.loginForm.$valid) {
+				$scope.loginUser.username = $scope.user.username;
+				$scope.loginUser.password = $scope.user.password;
+				
+				console.log("Login username :  " + $scope.loginUser.username);
+				console.log("Login password :  " + $scope.loginUser.password);
+				
+				var validationURL = URL + 'accounts/api-token-auth/';
+				
+				UserAPIService.saveUser(validationURL, $scope.loginUser)
+					.then(function(results) {
+						console.log("Login validation results");
+						console.log(results);
+						if(results.data.hasOwnProperty('token')) {
+							console.log("results.data.hasOwnProperty(\'token\')");
+							// User is valid
+							$scope.token = results.data.token;
+							console.log("validToken :  " + $scope.token);
+							// Valid login -> Store the details locally
+							store.set('username', $scope.loginUser.username);
+							store.set('authToken', $scope.token);
+							$location.path('/todo');
+						} else {
+							alert("Invalid login details/nPlease try again");
+						}
+					})
+					.catch(function(err) {
+						console.log("Error validating user :  " + $scope.loginUser.username);
+						console.log(err);
+						alert("Invalid login details/nPlease try again");
+					})
+				;
+				
+
+			}
+
+			console.log("Logged in as " + $scope.loginUser.username + "  " +
+				$scope.loginUser.password);
+		};
+	})
+	.controller('LogoutController', function(store) {
+		console.log("Logging out");
+		store.remove("username");
+		store.remove("authToken");
+	})
+
+;	//End of module

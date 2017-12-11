@@ -1,8 +1,8 @@
 body {
-	padding-top: 170px;
+	padding-top: 250px;
 }
 
-form#registrationForm {
+form#registrationForm, form#loginForm {
 	margin-top: 40px;
 }
 

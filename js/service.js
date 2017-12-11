@@ -11,7 +11,7 @@ angular.module('UserService', [])
 	})*/
 	.service('UserAPIService', function($http) {
 
-		this.callAPI = function(url, data) {
+		this.saveUser = function(url, data) {
 				return $http.post(url, data);
 		};
 
