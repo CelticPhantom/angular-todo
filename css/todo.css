@@ -18,6 +18,15 @@ form.my-form {
 	margin-top: 20px;
 }
 
+.hide {
+	display: none;
+}
+
+#user {
+	margin-top: 20px;
+	color: yellow;
+}
+
 @media only screen and (min-width: 768px) {
 	body {
 		padding-top: 90px;

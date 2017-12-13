@@ -2,7 +2,7 @@ angular.module('RouteControllers', [])
 	.controller('HomeController', function($scope) {
 		$scope.title = "Welcome to Angular ToDo";
 	})
-	.controller('RegisterController', function($scope, UserAPIService, store) {
+	.controller('RegisterController', function($scope, UserAPIService, store, $location) {
 		$scope.registrationUser = {};
 		var URL = "https://morning-castle-91468.herokuapp.com/";
 
@@ -14,6 +14,10 @@ angular.module('RouteControllers', [])
 				$scope.token = results.data.token;
 				store.set('username', $scope.registrationUser.username);
 				store.set('authToken', $scope.token);
+				angular.element("#user").removeClass("hide");
+				angular.element("#user").text("  " + $scope.registrationUser.username);
+				alert("You have successfully registered to Angular Todo as :\n  " + $scope.registrationUser.username);
+				$location.path('/todo');
 			})
 			.catch(function(err) {
 				console.log("Error authenticating user :  " +$scope.data.username);
@@ -32,7 +36,6 @@ angular.module('RouteControllers', [])
                     $scope.data = results.data;
                     console.log("Registered user :");
                     console.log(results.data);
-                    alert("You have successfully registered to Angular Todo as :\n  " + $scope.registrationUser.username);
                     $scope.login();
 //                    login($scope.data);
                 })
@@ -51,6 +54,12 @@ angular.module('RouteControllers', [])
 	.controller('TodoController', function($scope, TodoAPIService, store, $location) {
         var URL = "https://morning-castle-91468.herokuapp.com/";
         var todoURL = URL + "todo/";
+        
+        if(!store.get('authToken')) {
+        	$location.path('accounts/login');
+        	alert("Invalid access.  Please login");
+        	return;
+        }
         
         $scope.authToken = store.get('authToken');
         $scope.username = store.get('username');
@@ -197,6 +206,8 @@ angular.module('RouteControllers', [])
 							// Valid login -> Store the details locally
 							store.set('username', $scope.loginUser.username);
 							store.set('authToken', $scope.token);
+							angular.element("#user").removeClass("hide");
+							angular.element("#user").text("  " + $scope.loginUser.username);
 							$location.path('/todo');
 						} else {
 							alert("Invalid login details/nPlease try again");
@@ -220,6 +231,7 @@ angular.module('RouteControllers', [])
 		console.log("Logging out");
 		store.remove("username");
 		store.remove("authToken");
+		angular.element("#user").removeClass("hide").addClass("hide");
 	})
 
 ;	//End of module
