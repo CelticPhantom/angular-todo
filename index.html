@@ -15,27 +15,13 @@
 
 </head>
 <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-    	<div class="container">
-    		<a class="navbar-brand" href="/">Angular ToDo</a>
-    		<span id="user" class="glyphicon glyphicon-user hide">&nbsp;Please login</span>
-    	</div>
-    	<div class="container">
-	    	<ul class="nav navbar-nav navbar-right">
-	    		<li><a href="/">Home</a></li>
-	    		<li><a href="/todo">ToDo</a></li>
-	    		<li><a href="/accounts/register">Register</a></li>
-	    		<li><a href="/accounts/login">Login</a></li>
-	    		<li><a href="/accounts/logout">Logout</a></li>
-	    	</ul>
-    	</div>
-    </nav>
+	<todo-nav></todo-nav>
     <div ng-view>
     	
     </div>
    <script src="js/app.js"></script>
    <script src="js/controller.js"></script>
-   <script src="js/service.js"></script>
    <script src="js/directive.js"></script>
+   <script src="js/service.js"></script>
 </body>
 </html>

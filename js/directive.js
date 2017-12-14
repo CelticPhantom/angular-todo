@@ -10,4 +10,10 @@ angular.module('TodoDirective', [])
 			templateUrl: 'templates/directives/todo-table.html'
 		}
 	})
+	.directive('todoNav', function() {
+		return {
+			restrict: 'E',
+			templateUrl: 'templates/directives/todo-nav.html'
+		}
+	})
 ;
